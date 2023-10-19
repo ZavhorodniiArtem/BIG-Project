@@ -1,11 +1,11 @@
 import { cast, flow, types } from 'mobx-state-tree';
-import { MyPostsModel } from '@/store/my-posts/MyPostsModel.ts';
+import { PostsModel } from '@/store/posts/PostsModel.ts';
 import httpClient from '@/api/requests';
 
-const MyPostsStore = types
-  .model('MyPostsStore', {
-    posts: types.array(MyPostsModel),
-    post: MyPostsModel,
+const PostsStore = types
+  .model('PostsStore', {
+    posts: types.array(PostsModel),
+    post: PostsModel,
   })
 
   .actions((self) => {
@@ -35,6 +35,13 @@ const MyPostsStore = types
           console.log('error:', e);
         }
       }),
+      editPost: flow(function* (body, id) {
+        try {
+          yield httpClient.patch(`/posts/${id}`, body);
+        } catch (e) {
+          console.log('error:', e);
+        }
+      }),
       deletePost: flow(function* (id: string) {
         try {
           yield httpClient.delete(`/posts/${id}`);
@@ -45,4 +52,4 @@ const MyPostsStore = types
     };
   });
 
-export default MyPostsStore;
+export default PostsStore;

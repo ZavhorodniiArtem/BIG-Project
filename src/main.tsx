@@ -40,12 +40,7 @@ const store = RootStore.create({
     me: defaultAuthMe,
     error: '',
   },
-  albums: {},
-  todos: {},
-  photos: {},
-  users: {},
-  comments: {},
-  myPosts: {
+  Posts: {
     posts: [],
     post: {
       _id: '',
@@ -57,7 +52,6 @@ const store = RootStore.create({
       viewsCount: 0,
     },
   },
-  posts: {},
 });
 
 export const StoreContext = createContext(store);

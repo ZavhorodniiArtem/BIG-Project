@@ -1,9 +1,9 @@
 import { types } from 'mobx-state-tree';
-import MyPostsStore from './my-posts/myPostsStore.ts';
+import PostsStore from '@/store/posts/PostsStore.ts';
 import AuthStore from './auth/authStore.ts';
 
 const RootStore = types.model('RootStore', {
-  myPosts: MyPostsStore,
+  Posts: PostsStore,
   auth: AuthStore,
 });
 

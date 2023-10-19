@@ -13,7 +13,7 @@ const App = () => {
         {![EUrlPages.Login, EUrlPages.Registration].includes(
           location.pathname as EUrlPages,
         ) && <Navigation />}
-        <div className="p-8">
+        <div className="p-8 w-full">
           <Outlet />
         </div>
       </div>

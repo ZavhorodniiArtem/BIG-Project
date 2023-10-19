@@ -5,7 +5,7 @@ export const AuthorModel = types.model('Author', {
   _id: types.string,
 });
 
-export const MyPostsModel = types.model('MyPostsModel', {
+export const PostsModel = types.model('PostsModel', {
   _id: types.string,
   title: types.string,
   viewsCount: types.number,

@@ -8,13 +8,13 @@ import { Button, Form, Input, Modal } from 'antd';
 const Posts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { myPosts } = useStore();
+  const { Posts } = useStore();
   const navigate = useNavigate();
 
-  console.log('myPosts', toJS(myPosts.posts));
+  console.log('myPosts', toJS(Posts.posts));
 
   useEffect(() => {
-    myPosts.getPosts().then(() => setIsModalOpen(false));
+    Posts.getPosts().then(() => setIsModalOpen(false));
   }, []);
 
   const showModal = () => setIsModalOpen(true);
@@ -25,8 +25,8 @@ const Posts = () => {
     id: string,
   ) => {
     event.stopPropagation();
-    await myPosts.deletePost(id);
-    myPosts.getPosts();
+    await Posts.deletePost(id);
+    Posts.getPosts();
   };
 
   const handleOk = (values: any) => {
@@ -34,9 +34,9 @@ const Posts = () => {
       ?.split(/[ ,.]/)
       ?.filter((el: string) => el.length);
 
-    myPosts
-      .createPost({ ...values, tags: filteredTags })
-      .then(() => setIsModalOpen(false));
+    Posts.createPost({ ...values, tags: filteredTags }).then(() =>
+      setIsModalOpen(false),
+    );
   };
 
   return (
@@ -96,7 +96,7 @@ const Posts = () => {
       </Modal>
 
       <div>
-        {myPosts.posts.map((p) => {
+        {Posts.posts.map((p) => {
           return (
             <div
               key={p._id}
