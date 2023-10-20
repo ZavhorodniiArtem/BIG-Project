@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App.tsx';
-import Posts from '@/view/posts/Posts.tsx';
-import Post from '@/view/posts/Post.tsx';
+import Posts from '@/view/posts/components/Posts.tsx';
+import Post from '@/view/posts/components/Post.tsx';
 import Login from '@/view/auth/login/Login.tsx';
 import Registration from '@/view/auth/registration/Registration.tsx';
 import NotFound from '../view/notFound/NotFound.tsx';

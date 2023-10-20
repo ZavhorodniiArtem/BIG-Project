@@ -6,6 +6,7 @@ import useStore from '@hooks/useStore.ts';
 import { format } from 'date-fns';
 import { EyeOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal } from 'antd';
+import { PostType } from '@/view/posts/types.ts';
 
 const Post = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,9 +18,14 @@ const Post = () => {
   const showModal = () => setIsModalOpen(true);
   const handleCancel = () => setIsModalOpen(false);
 
-  const handleOk = async (values: any) => {
-    const filteredTags = values.tags.length
-      ? values.tags?.split(/[ ,.]/)?.filter((el: string) => el.length)
+  const handleOk = async (
+    values: Pick<PostType, 'title' | 'description' | 'tags'>,
+  ) => {
+    const filteredTags: string[] = values.tags.length
+      ? values.tags
+          ?.toString()
+          ?.split(/[ ,.]/)
+          ?.filter((el: string) => el.length)
       : [];
 
     console.log('filteredTags', filteredTags);

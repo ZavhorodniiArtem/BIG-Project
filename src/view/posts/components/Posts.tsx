@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { toJS } from 'mobx';
 import useStore from '@hooks/useStore.ts';
 import { Button, Form, Input, Modal } from 'antd';
+import { PostType } from '@/view/posts/types.ts';
 
 const Posts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,8 +30,11 @@ const Posts = () => {
     Posts.getPosts();
   };
 
-  const handleOk = (values: any) => {
-    const filteredTags = values.tags
+  const handleOk = (
+    values: Pick<PostType, 'title' | 'description' | 'tags'>,
+  ) => {
+    const filteredTags: string[] = values.tags
+      .toString()
       ?.split(/[ ,.]/)
       ?.filter((el: string) => el.length);
 
@@ -49,8 +53,6 @@ const Posts = () => {
         title="Create a new post"
         open={isModalOpen}
         footer={null}
-        //onOk={handleOk}
-        //okText="Create"
         onCancel={handleCancel}
       >
         <Form
