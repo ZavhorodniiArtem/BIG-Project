@@ -67,7 +67,7 @@ const Post = () => {
       <UpdatePostModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        getPost={Posts.getPosts}
+        getPost={Posts.getPost}
         editPost={Posts.editPost}
         _id={Posts.post._id}
         id={params.id}

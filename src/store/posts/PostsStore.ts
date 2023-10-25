@@ -1,4 +1,4 @@
-import { cast, flow, types } from 'mobx-state-tree';
+import { flow, types } from 'mobx-state-tree';
 import { PostsModel } from '@/store/posts/PostsModel.ts';
 import httpClient from '@/api/requests';
 
@@ -20,8 +20,8 @@ const PostsStore = types
       }),
       getPost: flow(function* (id: string) {
         try {
-          const data = yield httpClient.get(`/posts/${id}`);
-          self.post = cast(data.data);
+          const res = yield httpClient.get(`/posts/${id}`);
+          self.post = res.data;
         } catch (e) {
           console.log('error:', e);
         }
@@ -29,8 +29,8 @@ const PostsStore = types
       createPost: flow(function* (body) {
         try {
           const res = yield httpClient.post('/posts', body);
-          self.posts.push(res.data);
-          return res;
+          yield self.posts.push(res.data);
+          return yield res;
         } catch (e) {
           console.log('error:', e);
         }

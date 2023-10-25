@@ -39,8 +39,8 @@ export type TUpdatePostModalProps = {
   editPost: (
     values: Pick<TPost, 'title' | 'description' | 'tags'>,
     id: string,
-  ) => void;
-  getPost: (id: string) => void;
+  ) => Promise<void>;
+  getPost: (id: string) => Promise<void>;
   _id: string;
   id: string | undefined;
   post: Pick<TPost, 'title' | 'description' | 'tags'>;

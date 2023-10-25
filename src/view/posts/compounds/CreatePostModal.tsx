@@ -1,22 +1,26 @@
 import { Button, Form, Input, Modal } from 'antd';
 import { TCreatePostModalProps, TPost } from '@/view/posts/types.ts';
+import CustomTags from '@/shared/components/customTags';
+import { useState } from 'react';
 
 const CreatePostModal = ({
   isModalOpen,
   setIsModalOpen,
   createPost,
 }: TCreatePostModalProps) => {
-  const handleCancel = () => setIsModalOpen(false);
+  const [tags, setTags] = useState<string[]>([]);
 
-  const handleOk = (values: Pick<TPost, 'title' | 'description' | 'tags'>) => {
-    const filteredTags: string[] = values.tags
-      ?.toString()
-      ?.split(/[ ,.]/)
-      ?.filter((el: string) => el.length);
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setTags([]);
+  };
 
-    createPost({ ...values, tags: filteredTags }).then(() =>
-      setIsModalOpen(false),
-    );
+  const handleOk = (values: Pick<TPost, 'title' | 'description'>) => {
+    const body = { ...values, tags: tags };
+    createPost(body).then(() => {
+      setIsModalOpen(false);
+      setTags([]);
+    });
   };
 
   return (
@@ -48,9 +52,9 @@ const CreatePostModal = ({
           <Input.TextArea />
         </Form.Item>
 
-        <Form.Item label="Tags" name="tags" rules={[{ required: false }]}>
-          <Input />
-        </Form.Item>
+        <div className="my-5">
+          <CustomTags tags={tags} setTags={setTags} />
+        </div>
 
         <div className="flex justify-end">
           <Button

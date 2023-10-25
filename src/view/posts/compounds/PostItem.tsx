@@ -16,7 +16,7 @@ const PostItem = ({ post, deletePost }: TPostItemProps) => {
       <p className="text-blue-700 mb-2 text-xl">{title}</p>
       <p className="text-blue-800 mt-4">{description}</p>
       <p className="text-blue-800 mt-4 mb-1">
-        Tags: {tags.join(', ') || 'No tags'}
+        Tags: {tags.join(', ') || 'No customTags'}
       </p>
       <p className="text-blue-800 font-bold">Author: {author.userName}</p>
 

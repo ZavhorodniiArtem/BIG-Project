@@ -1,5 +1,7 @@
 import { Button, Form, Input, Modal } from 'antd';
 import { TPost, TUpdatePostModalProps } from '@/view/posts/types.ts';
+import CustomTags from '@/shared/components/customTags';
+import { useState } from 'react';
 
 const UpdatePostModal = ({
   setIsModalOpen,
@@ -10,20 +12,15 @@ const UpdatePostModal = ({
   id,
   post,
 }: TUpdatePostModalProps) => {
+  const [tags, setTags] = useState<string[]>(post.tags);
+
   const handleCancel = () => setIsModalOpen(false);
 
-  const handleOk = (values: Pick<TPost, 'title' | 'description' | 'tags'>) => {
-    const filteredTags: string[] = values.tags.length
-      ? values.tags
-          ?.toString()
-          ?.split(/[ ,.]/)
-          ?.filter((el: string) => el.length)
-      : [];
-
+  const handleOk = async (values: Pick<TPost, 'title' | 'description'>) => {
     try {
-      editPost({ ...values, tags: filteredTags }, _id);
-      getPost(id as string);
-      setIsModalOpen(false);
+      await editPost({ ...values, tags: tags }, _id);
+      await getPost(id as string);
+      handleCancel();
     } catch (err) {
       console.log('err', err);
     }
@@ -63,9 +60,9 @@ const UpdatePostModal = ({
           <Input.TextArea />
         </Form.Item>
 
-        <Form.Item label="Tags" name="tags" rules={[{ required: false }]}>
-          <Input />
-        </Form.Item>
+        <div className="my-5">
+          <CustomTags tags={tags} setTags={setTags} />
+        </div>
 
         <div className="flex justify-end">
           <Button
