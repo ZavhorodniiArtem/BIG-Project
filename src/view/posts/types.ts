@@ -30,7 +30,8 @@ export type TCreatePostModalProps = {
   setIsModalOpen: (modal: boolean) => void;
   createPost: (
     values: Pick<TPost, 'title' | 'description' | 'tags'>,
-  ) => Promise<boolean>;
+  ) => Promise<void>;
+  getPosts: () => Promise<void>;
 };
 
 export type TUpdatePostModalProps = {

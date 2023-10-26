@@ -29,8 +29,7 @@ const PostsStore = types
       createPost: flow(function* (body) {
         try {
           const res = yield httpClient.post('/posts', body);
-          yield self.posts.push(res.data);
-          return yield res;
+          self.posts.push(res.data);
         } catch (e) {
           console.log('error:', e);
         }

@@ -7,6 +7,7 @@ const CreatePostModal = ({
   isModalOpen,
   setIsModalOpen,
   createPost,
+  getPosts,
 }: TCreatePostModalProps) => {
   const [tags, setTags] = useState<string[]>([]);
 
@@ -15,12 +16,16 @@ const CreatePostModal = ({
     setTags([]);
   };
 
-  const handleOk = (values: Pick<TPost, 'title' | 'description'>) => {
+  const handleOk = async (values: Pick<TPost, 'title' | 'description'>) => {
     const body = { ...values, tags: tags };
-    createPost(body).then(() => {
-      setIsModalOpen(false);
+    try {
+      await createPost(body);
+      await getPosts();
       setTags([]);
-    });
+      setIsModalOpen(false);
+    } catch (err) {
+      console.log('err', err);
+    }
   };
 
   return (

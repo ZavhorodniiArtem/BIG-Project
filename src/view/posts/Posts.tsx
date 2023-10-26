@@ -43,6 +43,7 @@ const Posts = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         createPost={Posts.createPost}
+        getPosts={Posts.getPosts}
       />
     </>
   );
