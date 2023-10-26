@@ -19,7 +19,7 @@ export type TPost = {
 
 export type TPostItemProps = {
   post: Pick<TPost, 'title' | 'tags' | 'description' | 'author' | '_id'>;
-  deletePost: (
+  isConfirmDelete: (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     id: string,
   ) => void;
@@ -45,4 +45,12 @@ export type TUpdatePostModalProps = {
   _id: string;
   id: string | undefined;
   post: Pick<TPost, 'title' | 'description' | 'tags'>;
+};
+
+export type TConfirmDelete = {
+  isConfirmOpen: boolean;
+  setIsConfirmOpen: (bool: boolean) => void;
+  deletePost: (id: string) => Promise<void>;
+  getPosts: () => Promise<void>;
+  isDeletedId: string;
 };

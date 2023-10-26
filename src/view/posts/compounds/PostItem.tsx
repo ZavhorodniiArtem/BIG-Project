@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { TPostItemProps } from '@/view/posts/types.ts';
 
-const PostItem = ({ post, deletePost }: TPostItemProps) => {
+const PostItem = ({ post, isConfirmDelete }: TPostItemProps) => {
   const navigate = useNavigate();
 
   const { title, description, tags, author, _id } = post;
@@ -23,7 +23,7 @@ const PostItem = ({ post, deletePost }: TPostItemProps) => {
       <Button
         type="dashed"
         className="mt-3"
-        onClick={(e) => deletePost(e, _id)}
+        onClick={(event) => isConfirmDelete(event, _id)}
       >
         Delete post
       </Button>

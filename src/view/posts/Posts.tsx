@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import useStore from '@hooks/useStore.ts';
 import { observer } from 'mobx-react-lite';
-import { toJS } from 'mobx';
 import { Button } from 'antd';
 import CreatePostModal from '@/view/posts/compounds/CreatePostModal.tsx';
 import PostItem from '@/view/posts/compounds/PostItem.tsx';
+import ConfirmDeleteModal from '@/view/posts/compounds/ConfirmDeleteModal.tsx';
 
 const Posts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { Posts } = useStore();
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isDeletedId, setIsDeletedId] = useState('');
 
-  console.log('myPosts', toJS(Posts.posts));
+  const { Posts } = useStore();
 
   useEffect(() => {
     Posts.getPosts();
   }, []);
 
   const showModal = () => setIsModalOpen(true);
+  const showConfirm = () => setIsConfirmOpen(true);
 
-  const deletePost = async (
+  const isConfirmDelete = (
     event: React.MouseEvent<HTMLElement, MouseEvent>,
     id: string,
   ) => {
     event.stopPropagation();
-    await Posts.deletePost(id);
-    await Posts.getPosts();
+    showConfirm();
+    setIsDeletedId(id);
   };
 
   return (
@@ -35,7 +37,7 @@ const Posts = () => {
 
       <div className="flex flex-col mt-3">
         {Posts.posts.map((p) => {
-          return <PostItem post={p} deletePost={deletePost} />;
+          return <PostItem post={p} isConfirmDelete={isConfirmDelete} />;
         })}
       </div>
 
@@ -44,6 +46,14 @@ const Posts = () => {
         setIsModalOpen={setIsModalOpen}
         createPost={Posts.createPost}
         getPosts={Posts.getPosts}
+      />
+
+      <ConfirmDeleteModal
+        isConfirmOpen={isConfirmOpen}
+        setIsConfirmOpen={setIsConfirmOpen}
+        deletePost={Posts.deletePost}
+        getPosts={Posts.getPosts}
+        isDeletedId={isDeletedId}
       />
     </>
   );
