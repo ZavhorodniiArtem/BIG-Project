@@ -1,5 +1,3 @@
-import React from 'react';
-
 export type Author = {
   _id: string;
   userName: string;
@@ -18,11 +16,7 @@ export type TPost = {
 };
 
 export type TPostItemProps = {
-  post: Pick<TPost, 'title' | 'tags' | 'description' | 'author' | '_id'>;
-  isConfirmDelete: (
-    e: React.MouseEvent<HTMLElement, MouseEvent>,
-    id: string,
-  ) => void;
+  post: Omit<TPost, '__v' | 'updatedAt'>;
 };
 
 export type TCreatePostModalProps = {
@@ -52,5 +46,5 @@ export type TConfirmDelete = {
   setIsConfirmOpen: (bool: boolean) => void;
   deletePost: (id: string) => Promise<void>;
   getPosts: () => Promise<void>;
-  isDeletedId: string;
+  id: string;
 };

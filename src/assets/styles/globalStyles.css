@@ -1,3 +1,7 @@
 button.ant-btn-primary {
     background-color: #1677ff;
 }
+
+.ant-btn {
+    border: none;
+}

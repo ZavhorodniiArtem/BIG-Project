@@ -1,32 +1,47 @@
-import { Button } from 'antd';
+import { Avatar } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { TPostItemProps } from '@/view/posts/types.ts';
+import { EyeOutlined, UserOutlined } from '@ant-design/icons';
+import { format } from 'date-fns';
 
-const PostItem = ({ post, isConfirmDelete }: TPostItemProps) => {
+const PostItem = ({ post }: TPostItemProps) => {
   const navigate = useNavigate();
 
-  const { title, description, tags, author, _id } = post;
+  const { title, tags, author, _id, createdAt, viewsCount } = post;
 
   return (
     <div
       key={post._id}
-      className="border-blue-950 border-2 mt-2 p-4 rounded-2xl cursor-pointer hover:bg-blue-100"
+      className="bg-white mt-2 p-6 rounded-2xl cursor-pointer hover:bg-zinc-50"
       onClick={() => navigate(`/posts/${_id}`)}
     >
-      <p className="text-blue-700 mb-2 text-xl">{title}</p>
-      <p className="text-blue-800 mt-4">{description}</p>
-      <p className="text-blue-800 mt-4 mb-1">
-        Tags: {tags.join(', ') || 'No customTags'}
-      </p>
-      <p className="text-blue-800 font-bold">Author: {author.userName}</p>
+      <div className="flex items-center">
+        <Avatar size={40} icon={<UserOutlined />} />
+        <div className="ml-3">
+          <p className="font-medium">{author.userName}</p>
+          <p className="text-gray-500 text-xs">
+            {format(new Date(createdAt || 0), 'dd.MM.yy')}
+          </p>
+        </div>
+      </div>
 
-      <Button
-        type="dashed"
-        className="mt-3"
-        onClick={(event) => isConfirmDelete(event, _id)}
-      >
-        Delete post
-      </Button>
+      <div className="mt-6 px-10">
+        <p className="mb-2 text-[32px]">{title}</p>
+        <div className="flex gap-2">
+          {tags.map((tag) => {
+            return (
+              <p className="text-[14px]" key={tag}>
+                #{tag}
+              </p>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex items-center px-10 mt-6">
+        <EyeOutlined />
+        <span className="ml-1">{viewsCount}</span>
+      </div>
     </div>
   );
 };

@@ -5,11 +5,11 @@ const ConfirmDeleteModal = ({
   isConfirmOpen,
   setIsConfirmOpen,
   getPosts,
-  isDeletedId,
+  id,
   deletePost,
 }: TConfirmDelete) => {
   const handleDeletePost = async () => {
-    await deletePost(isDeletedId);
+    await deletePost(id);
     await getPosts();
     setIsConfirmOpen(false);
   };

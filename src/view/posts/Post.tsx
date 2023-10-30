@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { toJS } from 'mobx';
 import useStore from '@hooks/useStore.ts';
+import UpdatePostModal from '@/view/posts/compounds/UpdatePostModal.tsx';
+import ConfirmDeleteModal from '@/view/posts/compounds/ConfirmDeleteModal.tsx';
 import { format } from 'date-fns';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
-import UpdatePostModal from '@/view/posts/compounds/UpdatePostModal.tsx';
+import { Button } from 'antd';
 
 const Post = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
   const { Posts } = useStore();
   const params = useParams();
-
-  console.log('myPost', toJS(Posts.post));
 
   const showModal = () => setIsModalOpen(true);
 
@@ -62,6 +63,14 @@ const Post = () => {
             <EditOutlined />
           </div>
         </div>
+
+        <Button
+          type="dashed"
+          className="mt-3"
+          onClick={() => setIsConfirmOpen(true)}
+        >
+          Delete post
+        </Button>
       </div>
 
       <UpdatePostModal
@@ -72,6 +81,14 @@ const Post = () => {
         _id={Posts.post._id}
         id={params.id}
         post={Posts.post}
+      />
+
+      <ConfirmDeleteModal
+        isConfirmOpen={isConfirmOpen}
+        setIsConfirmOpen={setIsConfirmOpen}
+        deletePost={Posts.deletePost}
+        getPosts={Posts.getPosts}
+        id={Posts.post._id}
       />
     </>
   );
