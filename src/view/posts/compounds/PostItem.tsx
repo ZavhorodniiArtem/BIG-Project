@@ -26,14 +26,10 @@ const PostItem = ({ post }: TPostItemProps) => {
       </div>
 
       <div className="mt-6 px-10">
-        <p className="mb-2 text-[32px]">{title}</p>
+        <p className="mb-2 text-[48px]">{title}</p>
         <div className="flex gap-2">
           {tags.map((tag) => {
-            return (
-              <p className="text-[14px]" key={tag}>
-                #{tag}
-              </p>
-            );
+            return <p key={tag}>#{tag}</p>;
           })}
         </div>
       </div>
