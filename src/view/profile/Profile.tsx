@@ -1,16 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import useStore from '@hooks/useStore.ts';
-import { toJS } from 'mobx';
-import { useEffect } from 'react';
-import { UserOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { UserAddOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Button } from 'antd';
-import { UserAddOutlined } from '@ant-design/icons';
 import { format } from 'date-fns';
+import EditProfileModal from '@/view/profile/compounds/EditProfileModal.tsx';
 
 const Profile = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { auth } = useStore();
-
-  console.log('me', toJS(auth.me));
 
   useEffect(() => {
     auth.getMe();
@@ -28,7 +26,11 @@ const Profile = () => {
 
       <div className="bg-white rounded-2xl mt-16 pb-6">
         <div className="flex justify-end items-end">
-          <Button type="primary" className="mt-6 mr-6 ">
+          <Button
+            type="primary"
+            className="mt-6 mr-6"
+            onClick={() => setIsModalOpen(true)}
+          >
             Edit profile
           </Button>
         </div>
@@ -36,7 +38,9 @@ const Profile = () => {
         <div className="flex flex-col items-center mt-10">
           <p className="text-[32px]">{auth.me.userName || 'User'}</p>
 
-          <p className="text-[24px] my-4">{auth.me.birthday || 'birthday'}</p>
+          <p className="text-[24px] my-4">
+            {format(new Date(auth.me.birthday || 0), 'dd.MM.yy') || 'birthday'}
+          </p>
 
           <p className="text-[24px]">{auth.me.email || 'email'}</p>
 
@@ -51,6 +55,12 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      <EditProfileModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        username={auth.me.userName || ''}
+      />
     </div>
   );
 };

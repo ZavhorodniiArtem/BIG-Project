@@ -52,6 +52,12 @@ const store = RootStore.create({
       viewsCount: 0,
     },
   },
+  profile: {
+    profile: {
+      userName: '',
+      birthday: '',
+    },
+  },
 });
 
 export const StoreContext = createContext(store);
